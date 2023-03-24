@@ -1,0 +1,19 @@
+**/.DS_Store
+**/desktop.ini
+_site/**
+CNAME
+.travis.yml
+.idea/
+.vscode/
+node_modules/
+.hugo_build.lock
+scripts/
+maleri.md
+
+
+# auto-generated tag files
+tags
+
+# Hugo output
+public/
+resources/
