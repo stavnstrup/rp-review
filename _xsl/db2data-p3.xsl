@@ -18,8 +18,8 @@
   </xsl:result-document>
   <xsl:apply-templates select="records"/>
   <xsl:apply-templates select="organisations"/>
-  <xsl:apply-templates select="organisations" mode="data"/>
 -->
+  <xsl:apply-templates select="organisations" mode="data"/>
   <xsl:apply-templates select="responsibleparties"/>
   <xsl:apply-templates select="responsibleparties" mode="data"/>
 <!--
@@ -658,12 +658,14 @@
 
 <xsl:template match="responsibleparties">
   <xsl:apply-templates/>
+  <xsl:apply-templates mode="liststandards"/>
+
 </xsl:template>
 
 <xsl:template match="rpkey">
 <xsl:variable name="mykey" select="@key"/>
 <xsl:if test="count(/standards//standard[responsibleparty/@rpref=$mykey]) > 0">
-<xsl:result-document href="content/responsibleparty/{@key}.md">
+<xsl:result-document href="content/{@key}/index.md">
 <xsl:text>---&#x0A;</xsl:text>
 <xsl:text>element: Responsible Party&#x0A;</xsl:text>
 <xsl:text>nispid: </xsl:text><xsl:value-of select="@key"/><xsl:text>&#x0A;</xsl:text>
@@ -671,13 +673,29 @@
 <xsl:text>key: </xsl:text><xsl:value-of select="@key"/><xsl:text>&#x0A;</xsl:text>
 <xsl:text>short: </xsl:text><xsl:value-of select="@short"/><xsl:text>&#x0A;</xsl:text>
 <xsl:text>long: </xsl:text><xsl:value-of select="@long"/><xsl:text>&#x0A;</xsl:text>
-<xsl:text>responsible:&#x0A;</xsl:text>
-<xsl:text>  number: </xsl:text><xsl:value-of select="count(/standards//standard[responsibleparty/@rpref=$mykey])"/><xsl:text>&#x0A;</xsl:text>
-<xsl:text>  standards:&#x0A;</xsl:text>
-<xsl:apply-templates select="/*//standard/responsibleparty[@rpref=$mykey]" mode="liststandard"/>
+<xsl:text>responsible: </xsl:text><xsl:value-of select="count(/standards//standard[responsibleparty/@rpref=$mykey])"/><xsl:text>&#x0A;</xsl:text>
 <xsl:text>---&#x0A;</xsl:text>
 </xsl:result-document>
+<xsl:result-document href="content/{@key}/standards.csv">
+<xsl:text>id,org,pubnum,title,date,uri</xsl:text>
+<xsl:apply-templates select="/*//standard/responsibleparty[@rpref=$mykey]" mode="liststandardcsv"/>
+</xsl:result-document>
 </xsl:if>
+</xsl:template>
+
+<xsl:template match="responsibleparty" mode="liststandardcsv">
+<xsl:value-of select="../@id"/>
+<xsl:text>,</xsl:text>
+<xsl:value-of select="../document/@orgid"/>
+<xsl:text>,</xsl:text>
+<xsl:value-of select="../document/@pubnum"/>
+<xsl:text>,</xsl:text>
+<xsl:value-of select="../document/@title"/>
+<xsl:text>,</xsl:text>
+<xsl:value-of select="../document/@date"/>
+<xsl:text>,</xsl:text>
+<xsl:value-of select="../status/@uri"/>
+<xsl:text>&#x0A;</xsl:text>
 </xsl:template>
 
 <xsl:template match="responsibleparty" mode="liststandard">
