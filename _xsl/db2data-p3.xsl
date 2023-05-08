@@ -690,12 +690,12 @@
 <xsl:value-of select="../document/@orgid"/>
 <xsl:text>,</xsl:text>
 <xsl:value-of select="../document/@pubnum"/>
-<xsl:text>,</xsl:text>
+<xsl:text>,"</xsl:text>
 <xsl:value-of select="../document/@title"/>
-<xsl:text>,</xsl:text>
+<xsl:text>",</xsl:text>
 <xsl:value-of select="../document/@date"/>
 <xsl:text>,</xsl:text>
-<xsl:value-of select="../status/@uri"/>
+<xsl:value-of select="../status/uri"/>
 <xsl:text>&#x0A;</xsl:text>
 </xsl:template>
 
