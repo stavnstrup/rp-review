@@ -1,3 +1,20 @@
 {{ define "main" }}
 
+
+{{ with .Resources.GetMatch "standards.csv" }}
+<h1>standards</h1>
+{{ with . | transform.Unmarshal (dict "delimiter" ",") }}
+  <table>
+    {{ range $i, $value := . }}
+      {{ if eq $i 0 }}<thead>{{ end}}
+        <tr>
+          {{ range $value }}
+            <td>{{ . }}</td>
+          {{ end }}
+        </tr>
+      {{ if eq $i 0 }}</thead>{{ end}}
+    {{ end }}
+  </table>
+{{ end }}
+{{ end }}
 {{ end }}

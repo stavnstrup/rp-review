@@ -678,7 +678,7 @@
 <xsl:text>---&#x0A;</xsl:text>
 </xsl:result-document>
 <xsl:result-document href="content/{@key}/standards.csv">
-<xsl:text>id,org,pubnum,title,date,uri</xsl:text>
+<xsl:text>id,org,pubnum,title,date,uri&#x0A;</xsl:text>
 <xsl:apply-templates select="/*//standard/responsibleparty[@rpref=$mykey]" mode="liststandardcsv"/>
 </xsl:result-document>
 </xsl:if>
